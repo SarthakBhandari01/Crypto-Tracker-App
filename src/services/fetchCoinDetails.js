@@ -1,11 +1,10 @@
-import { COINGECKO_API_URL } from "../Helper/constants";
+import axiosInstance from "../Helper/axiosInstance";
 
 export async function FetchCoinDetails(coinId) {
+  console.log(coinId)
   try {
-    const response = await fetch(`${COINGECKO_API_URL}/coins/${coinId}`);
-    const result=await response.json();
-    console.log(result);
-    return result;
+    const response = await axiosInstance.get(`/coins/${coinId}`);
+    return response.data;
   } catch (error) {
     console.error(error);
     return null;
