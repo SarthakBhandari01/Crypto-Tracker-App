@@ -3,9 +3,11 @@ import { FetchCoinDetails } from "../services/fetchCoinDetails";
 import { useEffect } from "react";
 import { useQuery } from "react-query";
 import parse from "html-react-parser";
+import store from "../State/store";
 
 function CoinsDetailPage() {
   const { coinId } = useParams();
+  const {currency}=store();
   const { isError, error, isLoading, data } = useQuery(
     ["coin", coinId],
     () => FetchCoinDetails(coinId),
@@ -42,7 +44,7 @@ function CoinsDetailPage() {
           <div className="flex items-center mb-4 md:mb-0">
             <h2 className="text-xl font-bold text-yellow-400">Current Price : </h2>
             <span className="text-xl ml-3">
-              {data?.market_data?.current_price["usd"]}
+              {data?.market_data?.current_price[currency]}
             </span>
           </div>
         </div>
