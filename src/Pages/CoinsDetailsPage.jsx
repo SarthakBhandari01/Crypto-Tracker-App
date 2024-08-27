@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { useQuery } from "react-query";
 import parse from "html-react-parser";
 import store from "../State/store";
+import MyLoader from "../Component/PageLoader/PageLoader";
 
 function CoinsDetailPage() {
   const { coinId } = useParams();
@@ -20,7 +21,7 @@ function CoinsDetailPage() {
     console.log(data);
   }, [data]);
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <MyLoader/>;
   }
   if (isError) {
     console.log(error);

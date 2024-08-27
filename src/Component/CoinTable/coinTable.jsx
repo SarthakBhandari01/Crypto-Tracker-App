@@ -4,6 +4,8 @@ import { useQuery } from "react-query";
 // import { CurrencyContext } from "../../Context/currencyContext";
 import store from "../../State/store";
 import { useNavigate } from "react-router-dom";
+import MyLoader from "../PageLoader/PageLoader";
+import PageLoader from "../PageLoader/PageLoader.jsx";
 
 function CoinTable() {
   // useEffect(() => {
@@ -12,7 +14,7 @@ function CoinTable() {
 
   // const { currency } = useContext(CurrencyContext);
   const { currency } = store();
-  
+
   const [page, setPage] = useState(1);
   const { data, isLoading, isError, error } = useQuery(
     ["coin", page, currency],
@@ -24,11 +26,13 @@ function CoinTable() {
       staleTime: 2 * 1000 * 60,
     }
   );
-  const navigate=useNavigate();
-  function handleCoinRedirect(coinId){
+  const navigate = useNavigate();
+  function handleCoinRedirect(coinId) {
     navigate(`/details/${coinId}`);
   }
-
+  if (isLoading) {
+    return <PageLoader />;
+  }
   if (isError) {
     return <div>Error :{error.message}</div>;
   }
@@ -43,13 +47,13 @@ function CoinTable() {
       </div>
 
       <div className="flex flex-col gap-2 w-[80vw] mx-auto">
-        {isLoading && <div>loading...</div>}
+        {isLoading && <PageLoader/>}
         {data &&
           data.map((coin) => {
             return (
               <div
                 key={coin.id}
-                onClick={()=>handleCoinRedirect(coin.id)}
+                onClick={() => handleCoinRedirect(coin.id)}
                 className="py-4 px-2 w-full bg-transparent flex items-center cursor-pointer text-white font-semibold justify-between"
               >
                 <div className="flex justify-start  gap-3 basis-[35%] ">
