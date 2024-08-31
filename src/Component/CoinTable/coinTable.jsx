@@ -68,9 +68,9 @@ function CoinTable() {
                     <div className="text-xl">{coin.symbol}</div>
                   </div>
                 </div>
-                <div className="basis-[25%]">{coin.current_price}</div>
-                <div className="basis-[20%]">{coin.price_change_24h}</div>
-                <div className="basis-[20%]">{coin.market_cap}</div>
+                <div className="basis-[25%] text-lg">{(currency=="usd")?"$ ":"₹ "}{coin.current_price}</div>
+                <div className="basis-[20%] text-lg">{coin.price_change_24h}</div>
+                <div className="basis-[20%] text-lg">{(currency=="usd")?"$ ":"₹ "}{coin.market_cap}</div>
               </div>
             );
           })}

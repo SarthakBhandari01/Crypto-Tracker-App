@@ -1,10 +1,10 @@
 import { useParams } from "react-router-dom";
 import { FetchCoinDetails } from "../services/fetchCoinDetails";
-import { useEffect } from "react";
 import { useQuery } from "react-query";
 import parse from "html-react-parser";
 import store from "../State/store";
 import MyLoader from "../Component/PageLoader/PageLoader";
+import CoinInfoContainer from "../Component/CoinInfo/CoinInfoContainer";
 
 function CoinsDetailPage() {
   const { coinId } = useParams();
@@ -17,6 +17,7 @@ function CoinsDetailPage() {
       staleTime: 60 * 1000 * 2,
     }
   );
+
   if (isLoading) {
     return <MyLoader />;
   }
@@ -38,16 +39,16 @@ function CoinsDetailPage() {
             <span className="ml-3 text-xl">{data?.market_cap_rank}</span>
           </div>
           <div className="flex items-center mb-4 md:mb-0">
-            <h2 className="text-xl font-bold text-yellow-400">
-              Current Price :{" "}
-            </h2>
+            <h2 className="text-xl font-bold text-yellow-400">Current Price</h2>
             <span className="text-xl ml-3">
               {data?.market_data?.current_price[currency]}
             </span>
           </div>
         </div>
       </div>
-      <div className="md:w-2/3 w-full">coin information</div>
+      <div className="md:w-2/3 w-full">
+        <CoinInfoContainer coinId={data?.id} />
+      </div>
     </div>
   );
 }
